@@ -1,0 +1,14 @@
+start
+int a;
+int div;
+bool prim;
+div = 2;
+prim = true
+while div<=a/2:
+if a%div==0:
+prim=false;
+div=a/2+1;
+endif
+div=div+1;
+endwhile
+end
