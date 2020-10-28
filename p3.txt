@@ -7,3 +7,8 @@ for i = 0;i < m; i= i+1:
 sum = sum + n[i];
 endfor
 end
+
+
+
+
+

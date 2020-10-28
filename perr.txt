@@ -2,7 +2,7 @@ start
 int a;
 int b;
 int c;
-int max;
+int 1max;
 if a>=b :
 max != a;
 endif

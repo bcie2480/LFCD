@@ -28,3 +28,10 @@ while
 endwhile
 for
 endfor
+:
+;
+"
+(
+)
+[
+]
