@@ -13,13 +13,12 @@ class Node():
 
 class SymbolTable():
     def  __init__(self,length):
-        #initializing all the values from st with none
         self.__st = [None] * length
         self.__length= length
 
     def hash(self,key):
         length = len(self.__st)
-        return hash(key) % length
+        return key % length
 
     def __str__(self):
         s="";
@@ -27,43 +26,54 @@ class SymbolTable():
             s+=str(symbol)+"\n"
         return s
 
-    def add(self, key, value):
-        if self.findValue(value):
-            return
-        elem = self.__st[self.hash(key)]
+    def ascii(self, elem):
+        s = 0
+        elem.strip("\"")
+        for i in range(0, len(elem)):
+            s = s + ord(elem[i])
+        return s
 
-        if elem == None:
-            elem = Node(value)
-            self.__st[self.hash(key)] = elem
-            return
+    def add(self,value):
+        if isinstance(value, str):
+            key = self.ascii(value)
+        else:
+            key = value
+        index = self.hash(key)
+        node = self.__st[index]
+        if node is None:
+            self.__st[index] = Node(value)
+            return index
+        prev = node
+        while node is not None:
+            prev = node
+            node = node.next
+        prev.next = Node(value)
 
-        node = Node(value)
-        node.next = elem
-        self.__st[self.hash(key)] = node
-        return
 
     def findValue(self, value):
-        for key in range(0,self.__length):
-            index = self.hash(key)
-            if self.__st[index]==None:
-                continue
-            else:
-                node = self.__st[index]
-                while node != None:
-                    if node.getValue() == value:
-                        return True
-                    node = node.next
-        return False
+        if isinstance(value, str):
+            key = self.ascii(value)
+        else:
+            key = value
+        index = self.hash(key)
+        if self.__st[index] is None:
+            return -1
+        else:
+            node = self.__st[index]
+            while node is not None:
+                if node.getValue() == value:
+                    return index
+                node = node.next
 
 
 
 def test():
     st = SymbolTable(5)
 
-    st.add(1,"a")
-    st.add(6,"b")
-    st.add(2,"c")
-    st.add(3,"d")
+    st.add("a")
+    st.add("b")
+    st.add("c")
+    st.add("d")
 
     print("Symbol table: \n")
     print(st)
@@ -74,5 +84,8 @@ def test():
     print(st.findValue("a"))
     print("checking for value 'r':")
     print(st.findValue("r"))
+    print("checking for value 'b':")
+    print(st.findValue("b"))
 
-#test()
+
+test()
